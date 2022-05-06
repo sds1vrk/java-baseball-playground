@@ -6,7 +6,7 @@ public class BaseBallGame {
 	private boolean visit[]=new boolean[11]; // 사용한 숫자
 	private Integer com[]=new Integer[3];		// 채워진 자리수
 	private int MAX=3;
-	
+	Integer user[]=new Integer[MAX];
 	
 	// 자리수가 다른 3자리 랜덤 메소드
 	public void randomValue() {
@@ -36,6 +36,23 @@ public class BaseBallGame {
 		System.out.println("RANDOM VALUE"+Arrays.toString(com));		
 		
 	}
+	
+	public boolean validationCheck(String input) {
+		// 자리수가 다르면 return 
+		if (input.length()!=MAX) {
+			return false;
+		}
+		
+		// 숫자가 아닐 경우 return
+		char [] data=input.toCharArray();
+		for (char ch:data) {
+			if (!Character.isDigit(ch)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 			
 	// input Method
 	public Integer[] input() {
@@ -43,22 +60,41 @@ public class BaseBallGame {
 		String inputValue=scan.next();
 		// inputValue 
 		
+		boolean check=validationCheck(inputValue);
 		// 후에 check()로 3자리 넘어가거나 문자열 입력했을 경우 못 돌게 해야 함
 		// 다른 숫자만 입력 가능하게 해야 함
 		
-		// String -> int[]로 변경
-		String arr[]=inputValue.split("");
-		Integer user[]=new Integer[MAX];
-		for (int i=0;i<user.length;i++) {
-			user[i]=Integer.parseInt(arr[i]);
+		if (check) {
+			String arr[]=inputValue.split("");
+			
+			for (int i=0;i<user.length;i++) {
+				user[i]=Integer.parseInt(arr[i]);
+			}
+			
+//			return user;
+		}
+		
+		else {
+			input();
 		}
 		
 		return user;
+		
+		// String -> int[]로 변경
+//		String arr[]=inputValue.split("");
+//		Integer user[]=new Integer[MAX];
+//		for (int i=0;i<user.length;i++) {
+//			user[i]=Integer.parseInt(arr[i]);
+//		}
+		
+		
 		
 	}
 	
 	// com값과 user 값 비교
 	public boolean compare(Integer user[]) {
+		
+		System.out.println("user:"+Arrays.toString(user));
 		
 		// com값과 user값 비교
 		int strike=0;
